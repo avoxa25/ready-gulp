@@ -1,0 +1,40 @@
+{
+  "name": "kmk-landing",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "autoprefixer": "^10.2.5",
+    "gulp-sourcemaps": "^3.0.0",
+    "jshint": "^2.12.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-webp": "^4.0.1",
+    "node-sass": "^5.0.0",
+    "postcss": "^8.2.8"
+  },
+  "scripts": {
+    "start": "gulp styles",
+    "images": "gulp svgmin && gulp toWebp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memoryx3/kmk-landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/memoryx3/kmk-landing/issues"
+  },
+  "homepage": "https://github.com/memoryx3/kmk-landing#readme",
+  "description": ""
+}
