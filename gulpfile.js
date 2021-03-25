@@ -11,7 +11,6 @@ const rename = require("gulp-rename");
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 
-const filter = require('gulp-filter');
 const uglify = require('gulp-uglify');
 const { series } = require('gulp');
 
