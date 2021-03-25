@@ -23,7 +23,7 @@
     "postcss": "^8.2.8"
   },
   "scripts": {
-    "start": "gulp styles && gulp browsersync",
+    "start": "gulp",
     "images": "gulp imgmin && gulp towebp"
   },
   "repository": {

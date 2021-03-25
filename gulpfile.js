@@ -52,7 +52,7 @@ exports.towebp = () => {
         .pipe(sync.stream());
 }
 
-exports.browsersync = (start) => {
+exports.default = (start) => {
     sync.init({
         server: {
             baseDir: 'src'
@@ -66,4 +66,3 @@ exports.browsersync = (start) => {
     gulp.watch('src/*.scss', gulp.series('styles'));
     gulp.watch('src/*.html').on('change', sync.reload);
 }
-
