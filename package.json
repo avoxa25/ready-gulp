@@ -8,6 +8,7 @@
     "jshint": "^2.12.0"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.14",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
@@ -22,8 +23,8 @@
     "postcss": "^8.2.8"
   },
   "scripts": {
-    "start": "gulp styles",
-    "images": "gulp svgmin && gulp toWebp"
+    "start": "gulp styles && gulp browsersync",
+    "images": "gulp imgmin && gulp towebp"
   },
   "repository": {
     "type": "git",
