@@ -90,7 +90,7 @@ const browsersync = (start) => {
 }
 
 const watcher = () => {
-    gulp.watch('src/*.html').on('change', sync.reload);
+    gulp.watch('src/*.html', gulp.series('html'));
     gulp.watch('src/*.scss', gulp.series('styles'));
     gulp.watch('src/*.js', gulp.series('jsmin'));
 }
