@@ -1,10 +1,12 @@
 const gulp = require('gulp');
+const { series } = require('gulp');
 
+const autoprefixer = require('autoprefixer');
+const clean = require('gulp-clean');
+const cleanCss = require('gulp-clean-css');
+const postcss = require('gulp-postcss');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const cleanCss = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require("gulp-rename");
 
@@ -12,7 +14,7 @@ const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 
 const uglify = require('gulp-uglify');
-const { series } = require('gulp');
+
 
 const sync = require('browser-sync').create();
 
@@ -32,7 +34,6 @@ exports.styles = styles = () => {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist'))
         .pipe(sync.stream());
-    cb();
 }
 
 const imgmin = () => {
@@ -45,17 +46,19 @@ const imgmin = () => {
         .pipe(sync.stream());
 }
 
+const movesvg = () => {
+    return gulp.src('src/img/*.min.svg', { read: true })
+    .pipe(clean())
+    .pipe(gulp.dest('dist/img'));
+}
+
 const towebp = () => {
-    return gulp.src('src/img/*.min.{jpg,png}')
+    return gulp.src('src/img/*.min.{jpg,png}', { read: true })
+        .pipe(clean())
         .pipe(webp({
             quality: 50
         }))
         .pipe(gulp.dest('dist/img'))
-        .pipe(sync.stream()),
-
-        gulp.src('src/img/*.min.svg')
-            .pipe(gulp.dest('dist/img'))
-            .pipe(sync.stream());
 }
 
 exports.jsmin = jsmin = () => {
@@ -92,6 +95,6 @@ const watcher = () => {
     gulp.watch('src/*.js', gulp.series('jsmin'));
 }
 
-exports.images = series(imagemin, towebp);
+exports.images = series(imgmin, movesvg, towebp);
 exports.default = series(styles, jsmin, html, browsersync, watcher);
 

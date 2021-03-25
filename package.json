@@ -11,6 +11,7 @@
     "browser-sync": "^2.26.14",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean": "^0.4.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-plumber": "^1.2.1",
@@ -24,8 +25,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "images": "gulp imgmin && gulp towebp",
-    "test": "gulp jsmin"
+    "images": "gulp images"
   },
   "repository": {
     "type": "git",
