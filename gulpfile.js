@@ -11,11 +11,13 @@ const rename = require("gulp-rename");
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 
+const filter = require('gulp-filter');
+const uglify = require('gulp-uglify');
+const { series } = require('gulp');
+
 const sync = require('browser-sync').create();
 
-const uglify = require('gulp-uglify');
-
-exports.styles = () => {
+exports.styles = styles = () => {
     return gulp.src('src/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -29,11 +31,12 @@ exports.styles = () => {
             p.extname = '.css';
         }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('src'))
+        .pipe(gulp.dest('dist'))
         .pipe(sync.stream());
+    cb();
 }
 
-exports.imgmin = () => {
+const imgmin = () => {
     return gulp.src('src/img/*.*')
         .pipe(imagemin())
         .pipe(rename((p) => {
@@ -43,16 +46,36 @@ exports.imgmin = () => {
         .pipe(sync.stream());
 }
 
-exports.towebp = () => {
+const towebp = () => {
     return gulp.src('src/img/*.min.{jpg,png}')
         .pipe(webp({
             quality: 50
         }))
-        .pipe(gulp.dest('src/img'))
+        .pipe(gulp.dest('dist/img'))
+        .pipe(sync.stream()),
+
+        gulp.src('src/img/*.min.svg')
+            .pipe(gulp.dest('dist/img'))
+            .pipe(sync.stream());
+}
+
+exports.jsmin = jsmin = () => {
+    return gulp.src('src/*.js')
+        .pipe(uglify())
+        .pipe(rename((p) => {
+            p.basename += ".min"
+        }))
+        .pipe(gulp.dest('dist'))
         .pipe(sync.stream());
 }
 
-exports.default = (start) => {
+exports.html = html = () => {
+    return gulp.src('src/*.html')
+        .pipe(gulp.dest('dist'))
+        .pipe(sync.stream());
+}
+
+const browsersync = (start) => {
     sync.init({
         server: {
             baseDir: 'src'
@@ -62,7 +85,14 @@ exports.default = (start) => {
         ui: false,
     });
     start();
-
-    gulp.watch('src/*.scss', gulp.series('styles'));
-    gulp.watch('src/*.html').on('change', sync.reload);
 }
+
+const watcher = () => {
+    gulp.watch('src/*.html').on('change', sync.reload);
+    gulp.watch('src/*.scss', gulp.series('styles'));
+    gulp.watch('src/*.js', gulp.series('jsmin'));
+}
+
+exports.images = series(imagemin, towebp);
+exports.default = series(styles, jsmin, html, browsersync, watcher);
+
