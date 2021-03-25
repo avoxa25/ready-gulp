@@ -37,7 +37,7 @@ gulp-uglify.
 
 <h2>Guide:</h2>
 <p>
-<b><i>npm: start</i></b> command launches process that takes .scss file from /src directory then compile it to .css, adds prefixes for cross-browsing, minifies it, makes postfix ".min" and puts it to /dist directory.
+<b><i>npm: start</i></b> command launches process that takes .scss file from /src directory then compile it to .css, makes sourcemap, adds prefixes for cross-browsing, minifies it, makes postfix ".min" and puts it to /dist directory.
 After that it minifies all .js files in /src directory and puts them to /dist.
 Next task is just transfers .html files from /src to /dist directory.
 And last two tasks are launch browser sync and watching for files in /src folder.
